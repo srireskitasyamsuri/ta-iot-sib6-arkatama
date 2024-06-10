@@ -81,3 +81,25 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+
+toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+
+        function createdUser(){
+            // ambil form data
+            // kirim data ke server POST / users
+            // tampilkan pesan sukses
+            // reload halaman
+        }
+
+        function editUser(){
+
+        }
+
+        function deleteUser(){
+
+        }       
+    </script>
+@endpush
