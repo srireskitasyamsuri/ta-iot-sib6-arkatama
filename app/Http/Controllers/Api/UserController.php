@@ -70,11 +70,11 @@ class UserController extends Controller
       //  }
 
         // membuat user baru
-        $user = User::create($validated);
+        $users = User::create($validated);
 
         return response()->json([
             'message'   => 'Berhasil manambahkan user baru',
-            'data'      => $user
+            'data'      => $users
         ], 201);
     }
 
@@ -83,10 +83,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $user = User::find($id);
+        $users = User::find($id);
         return response()->json([
             'message'   => 'Berhasil menampilkan detail user',
-            'data'      => $user
+            'data'      => $users
         ], 200);
     }
 
@@ -113,37 +113,44 @@ class UserController extends Controller
             'email'     => [
                 'required',
                 'email',
-                'unique:users,email'
+                'unique:users,email,' .$id
             ],
             'password'  => [
-                'required',
+                'nullable',
                 'min:8'
             ],
-            'password_confirmation' => [
-                'required',
-                'same:password'
-            ],
-            'avatar' => [
-                'nullable',
-                'image',
-                'mimes:jpg,jpeg,png',
-                'max:2048' // 2 MB
-            ]
+  //         'password_confirmation' => [
+   //             'required',
+    //            'same:password'
+    //         ],
+    //       'avatar' => [
+     //           'nullable',
+       //         'image',
+         //       'mimes:jpg,jpeg,png',
+          //      'max:2048' // 2 MB
+           // ]
         ]);
 
         // Unggah avatar
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $avatarPath = $avatar->store('avatars', 'public');
-            $validated['avatar'] = $avatarPath;
+ //       if ($request->hasFile('avatar')) {
+//            $avatar = $request->file('avatar');
+  //          $avatarPath = $avatar->store('avatars', 'public');
+   //         $validated['avatar'] = $avatarPath;
+   //     }
+
+        // jika ada password baru, maka update password
+        if ($request->filled('password')) {
+            $validated['password'] = bcrypt($validated['password']);
+        }else{
+            unset($validated['password']);
         }
 
-        $user = User::find($id);
-        $user->update($validated);
+        $users = User::find($id);
+        $users->update($validated);
 
         return response()->json([
             'message'   => 'Berhasil mengupdate data user',
-            'data'      => $user
+            'data'      => $users
         ], 200);
     }
 
@@ -152,12 +159,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::find($id);
-        $user->delete();
+        $users = User::find($id);
+        $users->delete();
 
         return response()->json([
             'message'   => 'Berhasil menghapus data user',
-            'data'      => $user
+            'data'      => $users
         ], 200);
     }
 }
