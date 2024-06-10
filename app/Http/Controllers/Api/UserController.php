@@ -50,24 +50,24 @@ class UserController extends Controller
                 'required',
                 'min:8'
             ],
-            'password_confirmation' => [
-                'required',
-                'same:password'
-            ],
-            'avatar' => [
-                'nullable',
-                'image',
-                'mimes:jpg,jpeg,png',
-                'max:2048' // 2 MB
-            ]
+  //          'password_confirmation' => [
+    //            'required',
+      //          'same:password'
+        //    ],
+          //  'avatar' => [
+           //     'nullable',
+            //    'image',
+             //   'mimes:jpg,jpeg,png',
+              //  'max:2048' // 2 MB
+            //]
         ]);
 
         // Unggah avatar
-        if ($request->hasFile('avatar')) {
-            $avatar = $request->file('avatar');
-            $avatarPath = $avatar->store('avatars', 'public');
-            $validated['avatar'] = $avatarPath;
-        }
+  //      if ($request->hasFile('avatar')) {
+   //         $avatar = $request->file('avatar');
+    //        $avatarPath = $avatar->store('avatars', 'public');
+     //       $validated['avatar'] = $avatarPath;
+      //  }
 
         // membuat user baru
         $user = User::create($validated);
