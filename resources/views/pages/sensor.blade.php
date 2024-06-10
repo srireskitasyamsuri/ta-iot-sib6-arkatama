@@ -1,5 +1,5 @@
 @extends('layouts.dashboard')
 
 @section('isi')
-    <h1>Dashboard</h1>
+    <h1>Page Sensor</h1>
 @endsection
